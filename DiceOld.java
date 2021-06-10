@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class Dice {
+public class DiceOld {
     public final int DICE_FIVE = 5;
     public final int DICE_SIX = 6;
     
@@ -17,10 +17,10 @@ public class Dice {
     public String varEx2;
     public String varEx3;
     
-    public int resultEx1;
-    public int resultEx2;
-    public int resultEx3;
-    public int totalTrial;
+    protected int resultEx1;
+    protected int resultEx2;
+    protected int resultEx3;
+    protected int totalTrial;
 
     public List<Integer> listDice;
     public List<Integer> listTrial;
@@ -116,7 +116,7 @@ public class Dice {
     public void exerciseThree(int index) {
         if (listTrial.get(index) == this.DICE_FIVE || listTrial.get(index) == this.DICE_SIX) {
         	this.counterEx3 += 1;
-            this.varEx3 = this.varEx3 + "" + listTrial.get(index);
+            this.varEx3 = (String) this.varEx3 + "" + listTrial.get(index);
         } else {
             if (this.counterEx3 >= 2) {
                 if (this.listLuckySerie.containsKey(this.counterEx3)) {
@@ -135,22 +135,38 @@ public class Dice {
         }
     }
 
-    public void result() {
-        this.exercise();
-        System.out.println(this.resultEx1);
-        System.out.println(this.resultEx2);
+    public int getResultEx1() {
+        return this.resultEx1;
+    }
 
+    public int getResultEx2() {
+        return this.resultEx2;
+    }
+
+    public int getResultEx3() {
+        Integer size;
         Iterator iterator = this.listLuckySerie.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry me = (Map.Entry) iterator.next();
-            Integer size = (Integer) me.getKey();
             List<String> list = (ArrayList<String>) me.getValue();
+            size = (Integer) me.getKey();
 
             System.out.println("SIZE: " + size);
             for (int i = 0; i < list.size(); i++) {
                 System.out.println(list.get(i));
             }
+
+            this.resultEx3 = size;
         }
-        System.out.println(this.resultEx3);
+
+        return this.resultEx3;
+    }
+
+    public void result() {
+        this.exercise();       
+
+        System.out.println(this.getResultEx1());
+        System.out.println(this.getResultEx2());
+        System.out.println(this.getResultEx3());
     }
 }
