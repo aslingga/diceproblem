@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,45 +7,38 @@ import java.util.Map;
 
 public class Problem1 {
     public static void main(String[] args) {
-		List<String> input = new ArrayList<>();
-        String strTrial = new String();
-        Random rand = new Random();
+        try {
+            List<String> input = new ArrayList<>();
+            Scanner scanner = new Scanner(System.in);
 
-        Scanner scanner = new Scanner(System.in);
-        for (int i = 0; i < 2; i++) {
-        	input.add(scanner.next());
+            for (int i = 0; i < 2; i++) {
+                input.add(scanner.next());
+            }            
+            scanner.close();
+
+            if (Integer.parseInt(input.get(0)) >= 1 && Integer.parseInt(input.get(0)) <= 1000000) {
+                Dice dice = new Dice(input.get(0), input.get(1));
+                dice.result();
+            }
+        } catch (Exception e) {
+            //TODO: handle exception
         }
-        
-        scanner.close();
-
-        /* for (int i = 0; i < Integer.parseInt(input.get(0)); i++) {
-        	strTrial += rand.nextInt(6) + 1;
-        } */
-
-        System.out.println(strTrial);
-        Dice dice = new Dice(input.get(0), input.get(1));
-        /* Dice dice = new Dice(input.get(0), strTrial); */
-        dice.result();
     }
 }
 
 class Dice {
     public final int DICE_FIVE = 5;
-    public final int DICE_SIX = 6;
-    
+    public final int DICE_SIX = 6;    
     public final int MAX_COUNTER_EX1 = 2;
 
-    public int counterEx1;
-    public int counterEx2;
-    public int counterEx3;
-
-    public String varEx2;
-    public String varEx3;
-    
+    protected int counterEx1;
+    protected int counterEx2;
+    protected int counterEx3;    
     protected int resultEx1;
     protected int resultEx2;
     protected int resultEx3;
     protected int totalTrial;
+    protected String varEx3;
 
     public List<Integer> listDice;
     public List<Integer> listTrial;
@@ -56,13 +48,10 @@ class Dice {
     	this.counterEx1 = 0;
     	this.counterEx2 = 0;
     	this.counterEx3 = 0;
-    	
-    	this.varEx2 = "";
-        this.varEx3 = "";
-    	
         this.resultEx1 = 0;
         this.resultEx2 = 0;
         this.resultEx3 = 0;
+        this.varEx3 = "";
 
         this.listLuckySerie = new HashMap<>();
         this.listDice = new ArrayList<>();
@@ -165,12 +154,6 @@ class Dice {
             Map.Entry me = (Map.Entry) iterator.next();
             List<String> list = (ArrayList<String>) me.getValue();
             size = (Integer) me.getKey();
-
-            System.out.print("SERIES: " + size + " >>> " + list.size() + " || ");
-            for (int i = 0; i < list.size(); i++) {
-                System.out.print(list.get(i) + " ");
-            }
-            System.out.println();
 
             if (list.size() >= counterTotal) {
                 counterSize = size;
